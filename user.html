@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICCS Knowledge AI | Employee Portal</title>
+  <script src="js/shared-data.js"></script>
+  <link rel="stylesheet" href="css/user.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/ui.css">
+  <script src="js/auth.js"></script>
+  <script>
+    if(!getCurrentUser())location.replace("index.html");
+  </script>
+  <script src="js/knowledge-engine.js" defer></script>
+  <script src="js/user.js" defer></script>
+  <script src="js/ui-enhance.js" defer></script>
+</head>
+<body>
+  <div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✦</div>
+        <div>
+          <strong>ICCS</strong>
+          <small>Knowledge Assistant</small>
+        </div>
+      </div>
+
+      <nav class="navigation" aria-label="Main navigation">
+        <p class="nav-label">WORKSPACE</p>
+        <button class="nav-item" data-page="dashboard">
+          <span>▦</span> Overview
+        </button>
+        <button class="nav-item active" data-page="chat">
+          <span>✦</span> AI Assistant
+        </button>
+        <button class="nav-item" data-page="knowledge">
+          <span>▤</span> Knowledge Hub
+        </button>
+
+        <p class="nav-label">PERSONAL</p>
+        <button class="nav-item" data-page="history">
+          <span>◷</span> Chat History
+        </button>
+        <button class="nav-item" data-page="profile">
+          <span>◌</span> My Profile
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">Log out</button>
+      </div>
+    </aside>
+
+    <div class="main-shell">
+      <header class="topbar">
+        <button id="menuBtn" class="icon-btn" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+        <h1 class="breadcrumb">Knowledge Workspace</h1>
+        <div class="topbar-actions">
+          <a class="secondary-btn topbar-link" id="backToAdmin" href="admin.html" hidden>← Admin Console</a>
+          <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">☾</button>
+          <div class="avatar" id="avatar">E</div>
+        </div>
+      </header>
+
+      <main id="mainContent">
+        <section class="page" id="dashboard">
+          <div class="welcome">
+            <div>
+              <span class="eyebrow">KNOWLEDGE WORKSPACE</span>
+              <h2>Good to see you, <span id="employeeName">Employee</span> 👋</h2>
+              <p>Explore knowledge and get answers across business processes.</p>
+            </div>
+            <button class="primary-btn" data-go="chat">✦ Ask AI Assistant</button>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <span>Conversations</span>
+              <strong id="userChatCount">0</strong>
+              <small>Saved in this browser</small>
+            </article>
+            <article class="stat-card">
+              <span>Approved FAQs</span>
+              <strong id="userFaqCount">0</strong>
+              <small>Available to ask about</small>
+            </article>
+            <article class="stat-card">
+              <span>Knowledge Articles</span>
+              <strong id="userSourceCount">0</strong>
+              <small>Available knowledge sources</small>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel">
+              <div class="panel-heading">
+                <h2>Quick Actions</h2>
+                <p>Everything you need, one click away.</p>
+              </div>
+              <div class="action-grid">
+                <button data-go="chat">✦ Ask the Assistant</button>
+                <button data-go="history">◷ Chat History</button>
+                <button data-go="knowledge">📚 Explore Knowledge</button>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-heading">
+                <h2>Ask your Knowledge Assistant</h2>
+                <p>Find answers from approved knowledge.</p>
+              </div>
+              <div class="suggestions">
+                <button class="suggestion" data-question="Where can I read company policies?">Where can I read company policies?</button>
+                <button class="suggestion" data-question="How do I find a document?">How do I find a document?</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page active" id="chat">
+          <div class="page-heading">
+            <h2>AI Knowledge Assistant</h2>
+            <p>Search approved knowledge across any business process.</p>
+          </div>
+          <div class="chat-layout">
+            <aside class="chat-sidebar">
+              <button id="newChatBtn" class="secondary-btn">+ New Conversation</button>
+              <h3>Conversations</h3><label>Folder<select id="chatFolderFilter"><option value="">All folders</option></select></label><div class="tool-actions"><button id="addFolderBtn" class="secondary-btn" type="button">+ Folder</button><button id="moveChatBtn" class="secondary-btn" type="button">Move current chat</button></div>
+              <div id="conversationList"></div>
+            </aside>
+            <div class="chat-panel">
+              <div class="chat-messages" id="chatMessages" aria-live="polite"></div><label class="language-select">Response language (prototype)<select id="responseLanguage"><option value="en">English</option><option value="hi">Hindi (interface notice)</option></select></label>
+              <form id="chatForm" class="chat-composer">
+                <input id="chatInput" type="text" placeholder="Ask about any available knowledge..." required autocomplete="off">
+                <button class="primary-btn" type="submit">Send</button><button type="button" id="voiceQueryBtn" class="secondary-btn" title="Browser speech recognition; availability varies">🎙</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="knowledge">
+          <div class="page-heading">
+            <h2>Knowledge Hub</h2>
+            <p>Discover knowledge, suggested questions, and learning tools across all subjects.</p>
+          </div>
+          <input class="search-input" id="knowledgeSearch" placeholder="Search knowledge articles...">
+          <div class="panel" style="margin-bottom:16px"><h2>Suggested & Popular Questions</h2><p>Explore questions based on available approved knowledge.</p><div id="suggestedQuestions"></div></div><div class="article-grid" id="articleGrid"></div><div class="panel smart-tools"><h2>Knowledge Discovery Tools</h2><p>Local extraction and keyword-based prototypes; no generative AI is connected.</p>
+<div class="tool-grid"><label>Category<select id="filterCategory"><option value="">All categories</option></select></label><label>Author<input id="filterAuthor" placeholder="Filter by author"></label><label>Source<select id="selectedSource"><option value="">All sources</option></select></label></div>
+<div class="tool-actions"><button class="secondary-btn" id="summarizeBtn" type="button">Summarize selected knowledge</button><button class="secondary-btn" id="quizBtn" type="button">Generate practice quiz</button><button class="secondary-btn" id="learningBtn" type="button">Build learning path</button></div>
+<div id="knowledgeToolResult" class="tool-output" aria-live="polite">Select a knowledge source or category to explore.</div></div>
+<div class="panel"><h2>Knowledge Change Alerts</h2><p>Local notifications for changes to imported sources while this browser is in use.</p><div id="knowledgeAlerts"></div></div>
+        </section>
+
+        <section class="page" id="history">
+          <div class="page-heading"><h2>Chat History</h2><p>Conversations saved in this browser.</p></div>
+          <div class="panel" id="historyList"></div>
+        </section>
+
+        <section class="page" id="profile">
+          <div class="page-heading"><h2>My Profile</h2><p>Your demonstration account information.</p></div>
+          <div class="panel" id="profileDetails"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>

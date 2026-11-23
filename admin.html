@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICCS Knowledge AI | Admin Portal</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/ui.css">
+  <script src="js/auth.js"></script>
+  <script>
+    requireRole("admin");
+  </script>
+  <script src="js/shared-data.js"></script>
+  <script src="js/knowledge-engine.js" defer></script>
+  <script src="js/admin.js" defer></script>
+  <script src="js/ui-enhance.js" defer></script>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="brand-logo">✦</span>
+        <div>
+          <strong>ICCS Knowledge AI</strong>
+          <small>Admin Console</small>
+        </div>
+      </div>
+
+      <nav id="adminNav" aria-label="Admin navigation">
+        <p class="nav-heading">OVERVIEW</p>
+        <button class="nav-link active" data-page="dashboard">▦ Dashboard</button>
+        <button class="nav-link" data-page="analytics">◫ Analytics & Insights</button>
+
+        <p class="nav-heading">MANAGEMENT</p>
+        <button class="nav-link" data-page="users">♙ User Management</button>
+        <button class="nav-link" data-page="modules">▤ Modules & Questions</button>
+        <button class="nav-link" data-page="knowledge">▣ Knowledge Base</button>
+        <button class="nav-link" data-page="tickets">◉ Ticket Management</button>
+
+        <p class="nav-heading">AI OPERATIONS</p>
+        <button class="nav-link" data-page="models">✦ AI Model Management</button>
+        <button class="nav-link" data-page="tokens">◷ Token Usage & Cost</button>
+
+        <p class="nav-heading">SYSTEM</p>
+        <button class="nav-link" data-page="settings">⚙ Settings</button>
+      </nav>
+
+      <button class="logout-btn" id="logoutBtn">Log out</button>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+        <h1 class="topbar-title">Administration Workspace</h1>
+        <a class="secondary-btn topbar-link" id="openUserPortal" href="user.html">User Portal <span aria-hidden="true">↗</span></a>
+        <div class="admin-avatar">A</div>
+      </header>
+
+      <main>
+        <section class="page active" id="dashboard">
+          <div class="page-heading">
+            <div>
+              <span class="eyebrow">ADMIN CONSOLE</span>
+              <h2>Dashboard Overview</h2>
+              <p>Manage knowledge across any business process.</p>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card"><span>Total Users</span><strong id="statUsers">0</strong><small>Demo accounts</small></article>
+            <article class="stat-card"><span>Knowledge Articles</span><strong id="statArticles">0</strong><small>Indexed sample content</small></article>
+            <article class="stat-card"><span>Open Tickets</span><strong id="statTickets">0</strong><small>Browser demo data</small></article>
+            <article class="stat-card"><span>AI Requests</span><strong id="statRequests">0</strong><small>Simulated usage</small></article>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="panel">
+              <h2>Quick Actions</h2>
+              <div class="action-grid">
+                <button data-go="users">+ Manage Users</button>
+                <button data-go="knowledge">+ Add Knowledge</button>
+                <button data-go="modules">+ Manage Questions</button>
+                <button data-go="tickets">View Tickets</button>
+              </div>
+            </div>
+            <div class="panel">
+              <h2>System Status</h2>
+              <div class="status-row"><span>Frontend Application</span><strong>Active</strong></div>
+              <div class="status-row"><span>Demo Knowledge Engine</span><strong>Available</strong></div>
+              <div class="status-row"><span>External AI Connection</span><strong>Not connected</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="users">
+          <div class="page-heading">
+            <div><h2>User Management</h2><p>Manage demo users, roles, status, and permissions.</p></div>
+            <button class="primary-btn" id="addUserBtn">+ Add User</button>
+          </div>
+          <div class="panel table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Permissions</th><th>Actions</th></tr></thead>
+              <tbody id="usersTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="page" id="modules">
+          <div class="page-heading">
+            <div><h2>Modules & Questions</h2><p>Organize questions for any knowledge domain.</p></div>
+            <button class="primary-btn" id="addQuestionBtn">+ Add Question</button>
+          </div>
+          <div class="panel">
+            <div class="filter-row">
+              <select id="moduleFilter">
+                <option value="">All Modules</option>
+                <option>General</option>
+                <option>Operations</option>
+                <option>Training</option>
+                <option>Support</option>
+              </select>
+              <input id="questionSearch" placeholder="Search questions...">
+            </div>
+            <div id="questionsList"></div>
+          </div>
+        </section>
+
+        <section class="page" id="knowledge">
+          <div class="page-heading">
+            <div><h2>Knowledge Base</h2><p>Maintain universal knowledge articles and source content.</p></div>
+            <button class="primary-btn" id="addArticleBtn">+ Add Article</button>
+          </div>
+          <div class="panel">
+            <input id="articleSearch" placeholder="Search articles...">
+            <div id="adminArticles"></div>
+            <hr><h2>Import Knowledge Source</h2><p class="notice">Import text, Markdown, or a text-based PDF. Imported content is stored in this browser for demonstration. PDF extraction uses a public PDF.js CDN and requires internet.</p><form id="sourceForm" class="form-grid"><label>Knowledge source title<input id="sourceTitle" placeholder="e.g. Operations handbook" required></label><label>Category<input id="sourceCategory" placeholder="e.g. Operations" required></label><label>Author<input id="sourceAuthor" placeholder="Optional author or team"></label><label>Knowledge date<input id="sourceDate" type="date"></label><label>Upload file (.txt, .md, .pdf)<input id="sourceFile" type="file" accept=".txt,.md,.pdf,text/plain,application/pdf"></label><label>Or paste source content<textarea id="sourceText" rows="5" placeholder="Paste approved knowledge content here"></textarea></label><button class="primary-btn" type="submit">Import Knowledge</button></form><h2>Imported Sources</h2><div id="sourceList"></div>
+          </div>
+        </section>
+
+        <section class="page" id="tickets">
+          <div class="page-heading"><h2>Ticket Management</h2><p>View employee support requests in the demo workspace.</p></div>
+          <div class="panel">
+            <p class="notice">Tickets are shared between demo accounts in this browser only.</p>
+            <div id="adminTickets"></div>
+          </div>
+        </section>
+
+        <section class="page" id="models">
+          <div class="page-heading"><h2>AI Model Management</h2><p>Configure simulated model preferences.</p></div>
+          <div class="panel">
+            <form id="modelForm" class="form-grid">
+              <label>Provider<input id="modelProvider" placeholder="Demo provider"></label>
+              <label>Active Model<input id="activeModel" placeholder="Example: demo-model"></label>
+              <label>Tool Calling Model<input id="toolModel" placeholder="Example: demo-tools"></label>
+              <label>Input Price / 1M Tokens<input id="inputPrice" type="number" min="0" step="0.01"></label>
+              <label>Output Price / 1M Tokens<input id="outputPrice" type="number" min="0" step="0.01"></label>
+              <button class="primary-btn" type="submit">Save Demo Configuration</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="page" id="tokens">
+          <div class="page-heading"><h2>Token Usage & Cost</h2><p>Illustrative AI usage monitoring — not actual billing.</p></div>
+          <div class="stats-grid">
+            <article class="stat-card"><span>Requests</span><strong>0</strong></article>
+            <article class="stat-card"><span>Input Tokens</span><strong>0</strong></article>
+            <article class="stat-card"><span>Output Tokens</span><strong>0</strong></article>
+            <article class="stat-card"><span>Estimated Cost</span><strong>$0.00</strong></article>
+          </div>
+          <div class="panel"><h2>Recent Calls</h2><p>No external model calls have been made.</p></div>
+        </section>
+
+        <section class="page" id="analytics">
+          <div class="page-heading"><h2>Analytics & Insights</h2><p>Monitor sample knowledge coverage and operational activity.</p></div>
+          <div class="panel">
+            <h2>Knowledge Gap Analysis</h2><p>Track local unanswered searches and improve knowledge coverage.</p>
+          </div>
+          <section class="panel"><h2>Knowledge Intelligence</h2><p>Live counts from activity in this browser (not organization-wide telemetry).</p><div class="stats-grid intelligence-stats">
+<article class="stat-card"><span>Total Knowledge Sources</span><strong id="metricSources">0</strong></article>
+<article class="stat-card"><span>AI Questions Asked</span><strong id="metricQuestions">0</strong></article>
+<article class="stat-card"><span>Unanswered Questions</span><strong id="metricUnanswered">0</strong></article>
+<article class="stat-card"><span>Outdated Knowledge</span><strong id="metricOutdated">0</strong></article>
+<article class="stat-card"><span>User Feedback</span><strong id="metricFeedback">0</strong></article></div>
+<h3>Most Searched Topics</h3><div id="metricTopics" class="insight-list"></div><h3>Recent Unanswered Questions</h3><div id="metricGaps" class="insight-list"></div><h3>Recent User Feedback</h3><div id="metricFeedbackList" class="insight-list"></div></section>
+        </section>
+
+        <section class="page" id="settings">
+          <div class="page-heading"><h2>Settings</h2><p>Customize your demo admin workspace.</p></div>
+          <div class="panel">
+            <label><input type="checkbox" id="compactMode"> Enable compact layout</label>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="editorDialog">
+    <form id="editorForm">
+      <h2 id="dialogTitle">Add Record</h2>
+      <div id="editorFields"></div>
+      <div class="dialog-actions">
+        <button type="button" id="cancelDialog">Cancel</button>
+        <button type="submit" class="primary-btn">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>

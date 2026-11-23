@@ -1,0 +1,92 @@
+/* Shared component styles for Admin + Employee portals. Visual only. */
+body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.55}
+h1,h2,h3,h4{font-family:var(--font-head);letter-spacing:-.015em;color:var(--text)}
+p{color:var(--muted)}
+.page-heading h2,.welcome h2,.page>div>h2:first-child{font-size:clamp(22px,2.6vw,30px);font-weight:800;margin:6px 0}
+h2{font-size:18px}h3{font-size:15px}
+.eyebrow{color:var(--primary);font-weight:700;letter-spacing:.12em;font-size:11px}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Sidebar */
+.sidebar{background:var(--sidebar)}
+.brand-logo,.brand-icon{background:var(--primary);color:#fff;border-radius:var(--r2);width:40px;height:40px;padding:0;display:grid;place-items:center;font-size:20px}
+.nav-heading,.nav-label{color:#8fa1bf;font-weight:700;letter-spacing:.12em;font-size:11px}
+.nav-link,.nav-item{position:relative;color:#c3cee0;font-size:14px;font-weight:500;min-height:44px;transition:background var(--t),color var(--t)}
+.nav-link:hover,.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-link.active,.nav-item.active{background:rgba(37,99,235,.28);color:#fff;font-weight:600;box-shadow:none}
+.nav-link.active::before,.nav-item.active::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:#93c5fd}
+.logout-btn{min-height:44px;background:rgba(255,255,255,.08);transition:background var(--t)}
+.logout-btn:hover{background:rgba(220,38,38,.35)}
+
+/* Topbar */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:9}
+.topbar-title,.breadcrumb{font-size:15px;font-weight:600;margin:0;flex:1;color:var(--text);letter-spacing:0}
+.menu-btn,.icon-btn{min-width:44px;min-height:44px;border-radius:var(--r1);color:var(--text);background:transparent;border:1px solid transparent;transition:background var(--t)}
+.menu-btn:hover,.icon-btn:hover{background:var(--surface-soft)}
+.admin-avatar,.avatar{background:var(--primary-soft);color:var(--primary)}
+main{padding:32px clamp(16px,3vw,40px)}
+
+/* Cards */
+.panel,.stat-card,.article-card,.chat-panel,.chat-sidebar,.record,.welcome{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);box-shadow:var(--sh1);color:var(--text)}
+.stat-card,.article-card{transition:box-shadow var(--t),border-color var(--t)}
+.stat-card:hover,.article-card:hover{box-shadow:var(--sh2);border-color:#bfdbfe}
+.notice{background:var(--primary-soft);border:1px solid var(--border);border-radius:var(--r1);color:var(--text)}
+
+/* Buttons */
+.primary-btn,.secondary-btn,.suggestion,.conversation-btn{min-height:40px;border-radius:var(--r1);font-weight:600;transition:background var(--t),border-color var(--t),box-shadow var(--t)}
+.primary-btn{background:var(--primary);color:#fff;border:1px solid var(--primary)}
+.primary-btn:hover{background:var(--primary-dark);box-shadow:var(--sh2)}
+.secondary-btn,.suggestion,.conversation-btn{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.secondary-btn:hover,.suggestion:hover,.conversation-btn:hover{border-color:var(--primary);background:var(--primary-soft)}
+button:disabled{opacity:.5;cursor:not-allowed}
+
+/* Forms */
+input,select,textarea{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r1);min-height:40px;transition:border-color var(--t),box-shadow var(--t)}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:var(--ring)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+label{font-weight:600;font-size:13px}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r2);background:var(--surface)}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{background:var(--surface-soft);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;padding:12px 16px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text)}
+tbody tr:hover{background:var(--surface-soft)}
+tbody tr:last-child td{border-bottom:0}
+
+/* Chat */
+.message{border-radius:var(--r2);line-height:1.65;overflow-wrap:anywhere}
+.message.user{background:var(--primary);color:#fff;border-bottom-right-radius:4px}
+.message.assistant{background:var(--surface-soft);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px}
+.message small{display:block;margin-top:8px;color:var(--muted)}
+.message.user small{color:#dbeafe}
+.message .copy-btn{margin:10px 0 0;min-height:32px;font-size:12px;color:var(--muted);border:1px solid var(--border);background:var(--surface)}
+.message .copy-btn:hover{color:var(--primary);border-color:var(--primary)}
+.chat-composer{background:var(--surface);border-top:1px solid var(--border);gap:8px}
+.chat-composer input{flex:1;min-width:0}
+
+/* Dialog + toast */
+dialog{border:1px solid var(--border);border-radius:var(--r3);background:var(--surface);color:var(--text);box-shadow:var(--sh2)}
+dialog::backdrop{background:rgba(15,23,42,.55)}
+.toast{background:var(--sidebar);color:#fff;border-radius:var(--r1);box-shadow:var(--sh2)}
+
+/* Mobile drawer scrim */
+.scrim{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:15}
+@media(max-width:760px){
+  body.nav-open .scrim{display:block}
+  body.nav-open{overflow:hidden}
+  .sidebar{z-index:20}
+  .stat-card,.panel{padding:16px}
+  button,select,input{min-height:44px}
+  .chat-composer{position:sticky;bottom:0}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+/* Topbar link buttons + flexible stat grid */
+a.secondary-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;text-decoration:none;white-space:nowrap;font-size:14px}
+a.secondary-btn[hidden]{display:none}
+.topbar{gap:12px}
+.stats-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+@media(max-width:480px){a.secondary-btn.topbar-link{padding:0 10px;font-size:13px}.topbar-title,.breadcrumb{font-size:13px}}

@@ -1,0 +1,21 @@
+/* Shared design tokens (light + dark). Load AFTER page CSS so these win. */
+:root{
+  --font:Inter,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-head:Inter,"Segoe UI",system-ui,sans-serif;
+  --primary:#2563eb;--primary-dark:#1d4ed8;--primary-soft:#eff6ff;
+  --success:#059669;--warning:#b45309;--error:#dc2626;
+  --bg:#f8fafc;--surface:#fff;--surface-soft:#f1f5f9;
+  --text:#0f172a;--muted:#64748b;--border:#e2e8f0;
+  --sidebar:#0f172a;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;
+  --r1:8px;--r2:12px;--r3:16px;
+  --sh1:0 1px 2px rgba(15,23,42,.06);--sh2:0 8px 24px rgba(15,23,42,.10);
+  --ring:0 0 0 3px rgba(37,99,235,.25);
+  --t:.16s ease;
+}
+body.dark{
+  --primary:#60a5fa;--primary-dark:#3b82f6;--primary-soft:#172554;
+  --bg:#0b1220;--surface:#111b2e;--surface-soft:#18243a;
+  --text:#e8eefb;--muted:#9fb0c8;--border:#24344f;--sidebar:#070d1a;
+  --sh1:none;--sh2:0 8px 24px rgba(0,0,0,.4);--ring:0 0 0 3px rgba(96,165,250,.35);
+}
